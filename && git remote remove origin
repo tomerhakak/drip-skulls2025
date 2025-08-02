@@ -1,0 +1,5 @@
+[33m59300ad[m[33m ([m[1;36mHEAD -> [m[1;32mgh-pages[m[33m, [m[1;31morigin/gh-pages[m[33m)[m Fix build folder - add video and update HTML
+[33m349801b[m Add cache buster and debug info for video
+[33mdc243a8[m Fix video paths - remove old paths
+[33m9f0696e[m Add video to web folder and rebuild
+[33m80aeaef[m Add video to root folder for direct access

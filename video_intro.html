@@ -48,11 +48,21 @@
             color: white;
             font-size: 18px;
             z-index: 999;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 2px solid #8B4513;
+        }
+        
+        #loading:hover {
+            background: rgba(139, 69, 19, 0.8);
+            transform: translate(-50%, -50%) scale(1.05);
         }
     </style>
 </head>
 <body>
-    <div id="loading">Loading video...</div>
+    <div id="loading">🎬 Click to Start Video</div>
     
     <video id="video" autoplay muted playsinline preload="auto">
         <source src="intro_video.mp4?v=2025" type="video/mp4">
@@ -99,29 +109,29 @@
         // Force video load
         video.load();
         
-        // Try to start video after short delay
-        setTimeout(() => {
+        // Auto-start video immediately - user already clicked ENTER button
+        function startVideo() {
             video.play().then(() => {
                 console.log('🎬 Video play() succeeded');
                 loading.style.display = 'none';
             }).catch((error) => {
-                console.log('🎬 Video autoplay blocked:', error);
-                loading.innerHTML = 'Click anywhere to start video';
+                console.log('🎬 Video autoplay blocked, need click:', error);
+                loading.innerHTML = '🎬 Click to Start Video';
                 loading.style.cursor = 'pointer';
                 
-                function startVideo() {
+                loading.addEventListener('click', () => {
                     video.play().then(() => {
                         loading.style.display = 'none';
-                        document.removeEventListener('click', startVideo);
                     }).catch((err) => {
                         console.error('Failed to play video:', err);
-                        alert('Video failed to load. Check console for details.');
+                        loading.innerHTML = 'Error loading video - Click Skip';
                     });
-                }
-                
-                document.addEventListener('click', startVideo);
+                });
             });
-        }, 1000);
+        }
+        
+        // Try immediately since user clicked ENTER
+        setTimeout(startVideo, 500);
         
         function skipToApp() {
             console.log('🎬 Skip button clicked');
